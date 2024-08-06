@@ -162,11 +162,25 @@
         </div>
     </div>
     <script>
-        
-        setTimeout(function() {
-            document.getElementById('welcome-container').style.display = 'none';
-            document.getElementById('content-container').style.display = 'block';
-        }, 5000); 
+        function getParameterByName(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const username = getParameterByName('username');
+            if (username) {
+                const usernameElement = document.querySelector('#username');
+                if (usernameElement) {
+                    usernameElement.textContent = username;
+                }
+            }
+
+           
+            setTimeout(() => {
+                window.location.href = 'https://contratocomopostar.vercel.app/';
+            }, 5000); // 
+        });
     </script>
 </body>
 </html>
