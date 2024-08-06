@@ -27,9 +27,8 @@
         h2 {
             color: #660000;
         }
-
         h1 {
-            color: #fff
+            color: #fff;
         }
         .intro, .step {
             margin-bottom: 20px;
@@ -39,33 +38,29 @@
             border-radius: 5px;
         }
         @keyframes hoverEffect {
-    from {
-        transform: scale(1);
-        border-color: #ddd;
-    }
-    to {
-        transform: scale(1.05);
-        border-color: #ff6600;
-    }
-}
-
-
-.card {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 20px;
-    padding: 10px;
-    background-color: white;
-    border: 2px solid #ddd; 
-    border-radius: 5px;
-    transition: border-color 0.3s ease; 
-}
-
-
-.card:hover {
-    animation: hoverEffect 0.5s forwards; 
-}
+            from {
+                transform: scale(1);
+                border-color: #ddd;
+            }
+            to {
+                transform: scale(1.05);
+                border-color: #ff6600;
+            }
+        }
+        .card {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: white;
+            border: 2px solid #ddd; 
+            border-radius: 5px;
+            transition: border-color 0.3s ease; 
+        }
+        .card:hover {
+            animation: hoverEffect 0.5s forwards; 
+        }
         .card img {
             width: 250px;
             height: 250px;
@@ -103,7 +98,6 @@
             height: auto;
         }
         .welcome-content {
-          
             background-size: cover;
             background-position: center;
             padding: 40px 20px;
@@ -114,11 +108,13 @@
             text-align: center;
             box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
         }
-
         p {
-    color: #000000; 
-}
-
+            color: #000000;
+        }
+        .fade-out {
+            opacity: 0;
+            transition: opacity 1s ease-out;
+        }
     </style>
 </head>
 <body>
@@ -127,13 +123,14 @@
     </header>
     <div class="container" id="welcome-container">
         <div class="welcome-content">
-            <h2>Olá {USERNAME}, seja bem-vindo ao formulário de Controle de Contratações do turno Vespertino.</h2>
+            <img src="https://i.imgur.com/Cp5F1wi.png" alt="Bem-vindo">
+            <h2>Olá <span id="username">Usuário</span>, seja bem-vindo ao formulário de Controle de Contratações do turno Vespertino.</h2>
             <p>Neste formulário você precisa preencher todas as informações de forma correta, se atente-se aos mínimos detalhes.</p>
         </div>
     </div>
     <div class="container" id="content-container" style="display: none;">
         <div class="intro">
-            <p>Olá, {USERNAME}, veja como realizar sua contratação.</p>
+            <p>Olá, <span id="username-intro">Usuário</span>, veja como realizar sua contratação.</p>
         </div>
         <div class="step">
             <h2>Passo 1: Verifique o status do usuário</h2>
@@ -170,16 +167,18 @@
         window.addEventListener('DOMContentLoaded', () => {
             const username = getParameterByName('username');
             if (username) {
-                const usernameElement = document.querySelector('#username');
-                if (usernameElement) {
-                    usernameElement.textContent = username;
-                }
+                const usernameElements = document.querySelectorAll('#username, #username-intro');
+                usernameElements.forEach(el => el.textContent = username);
             }
 
-           
+            // Após 5 segundos, esconder o container de boas-vindas e mostrar o conteúdo
             setTimeout(() => {
-                window.location.href = 'https://contratocomopostar.vercel.app/';
-            }, 5000); // 
+                document.getElementById('welcome-container').classList.add('fade-out');
+                setTimeout(() => {
+                    document.getElementById('welcome-container').style.display = 'none';
+                    document.getElementById('content-container').style.display = 'block';
+                }, 1000); // tempo de animação de fade-out
+            }, 5000); // 5000 milissegundos = 5 segundos
         });
     </script>
 </body>
